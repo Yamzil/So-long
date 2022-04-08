@@ -6,7 +6,7 @@
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:48:16 by yamzil            #+#    #+#             */
-/*   Updated: 2022/04/07 02:32:15 by yamzil           ###   ########.fr       */
+/*   Updated: 2022/04/08 01:53:56 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,11 @@ int	ft_checkplayer(t_g map, t_g player)
 		}
 		i++;
 	}
-	if (player.player > 1)
+	if (player.player != 1)
 	{
-		write(2, "Map has more than 1 player !", 29);
+		write(2, "Check Player !\n", 16);
 		return (0);
 	}
-	printf("|%d|\n", player.player);
 	return (player.player);
 }
 
@@ -57,7 +56,11 @@ int	ft_checkexit(t_g map, t_g exit)
 		}
 		i++;
 	}
-	printf("[%d]\n", exit.exit);
+	if (exit.exit != 1)
+	{
+		write(2, "Check exit !\n", 14);
+		return (0);
+	}
 	return (exit.exit);
 }
 
@@ -79,7 +82,11 @@ int	ft_checkcollectibles(t_g map, t_g collectibles)
 		}
 		i++;
 	}
-	printf("{%d}\n", collectibles.collectibles);
+	if (collectibles.collectibles != 1)
+	{
+		write(2, "Check collectibles !\n", 22);
+		return (0);
+	}
 	return (collectibles.collectibles);
 }
 
@@ -90,31 +97,31 @@ void	ft_contents(t_g map, t_g player, t_g exit, t_g collectibles)
 	ft_checkcollectibles(map, collectibles);
 }
 
-int	ft_checkelemnts(t_g map, t_g player, t_g exit, t_g collectibles)
+void	ft_checkelemnts(char **av, t_g map)
 {
+	int	columns;
+	int	row;
 	int	i;
 	int	j;
 
 	i = 0;
+	columns = ft_getlencolumns(av);
+	row = ft_getlenrow(map);
 	while (map.map[i])
 	{
-		puts("ss");
 		j = 0;
 		while (map.map[i][j])
 		{
-			if (map.map[i][j] != 'P' || map.map[i][j] != 'C' || map.map[i][j] != 'E')
+			if (map.map[i][j] != '1' && map.map[i][j] != '\n'
+				&& map.map[i][j] != '0' && map.map[i][j] != 'E'
+				&& map.map[i][j] != 'C' && map.map[i][j] != 'P'
+				&& map.map[i][j] != '\0')
 			{
-				write(2, "Error\n : Une menace a ete detectee !\n", 38);
-				return (0);
-			}
-			else
-			{
-				ft_contents(map, player, exit, collectibles);
-				return (1);
+				write(2, "Elements Error\n", 16);
+				exit (0);
 			}
 			j++;
 		}
 		i++;
 	}
-	return (1);
 }

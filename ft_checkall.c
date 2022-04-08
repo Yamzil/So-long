@@ -1,42 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_countline.c                                     :+:      :+:    :+:   */
+/*   ft_checkall.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/06 00:57:14 by yamzil            #+#    #+#             */
-/*   Updated: 2022/04/08 01:32:12 by yamzil           ###   ########.fr       */
+/*   Created: 2022/04/08 02:19:16 by yamzil            #+#    #+#             */
+/*   Updated: 2022/04/08 02:20:48 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_getlencolumns(char **av)
+void ft_checkall(char **av, t_g map, t_g player, t_g exit, t_g collectibles)
 {
-	int		count;
-	int		fd;
-	char	*map;
-
-	fd = open(av[1], O_RDONLY);
-	if (fd < 0)
-		return (0);
-	map = get_next_line(fd);
-	count = 0;
-	while (map)
-	{
-		count++;
-		map = get_next_line(fd);
-	}
-	return (count);
-}
-
-int	ft_getlenrow(t_g map)
-{
-	int	j;
-
-	j = 0;
-	while (map.map[0][j] != '\n')
-		j++;
-	return (j);
+    ft_checkelemnts(av, map);
+	ft_checksurrounded(av, map);
+	ft_contents(map, player, exit, collectibles);
+	ft_checkelemnts(av, map);
 }

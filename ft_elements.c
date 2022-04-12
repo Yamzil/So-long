@@ -6,116 +6,109 @@
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 20:48:16 by yamzil            #+#    #+#             */
-/*   Updated: 2022/04/08 01:53:56 by yamzil           ###   ########.fr       */
+/*   Updated: 2022/04/11 02:01:55 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_checkplayer(t_g map, t_g player)
+void	ft_checkplayer(t_g *map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	player.player = 0;
-	while (map.map[i])
+	map->player = 0;
+	while (map->map[i])
 	{
 		j = 0;
-		while (map.map[i][j])
+		while (map->map[i][j])
 		{
-			if (map.map[i][j] == 'P')
-				player.player++;
+			if (map->map[i][j] == 'P')
+				map->player++;
 			j++;
 		}
 		i++;
 	}
-	if (player.player != 1)
+	if (map->player != 1)
 	{
 		write(2, "Check Player !\n", 16);
-		return (0);
+		exit (1);
 	}
-	return (player.player);
 }
 
-int	ft_checkexit(t_g map, t_g exit)
+void	ft_checkexit(t_g *map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	exit.exit = 0;
-	while (map.map[i])
+	map->exit = 0;
+	while (map->map[i])
 	{
 		j = 0;
-		while (map.map[i][j])
+		while (map->map[i][j])
 		{
-			if (map.map[i][j] == 'E')
-				exit.exit++;
+			if (map->map[i][j] == 'E')
+				map->exit++;
 			j++;
 		}
 		i++;
 	}
-	if (exit.exit != 1)
+	if (map->exit < 1)
 	{
 		write(2, "Check exit !\n", 14);
-		return (0);
+		exit (1);
 	}
-	return (exit.exit);
 }
 
-int	ft_checkcollectibles(t_g map, t_g collectibles)
+void	ft_checkcollectibles(t_g *map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	collectibles.collectibles = 0;
-	while (map.map[i])
+	map->collectibles = 0;
+	while (map->map[i])
 	{
 		j = 0;
-		while (map.map[i][j])
+		while (map->map[i][j])
 		{
-			if (map.map[i][j] == 'E')
-				collectibles.collectibles++;
+			if (map->map[i][j] == 'C')
+				map->collectibles++;
 			j++;
 		}
 		i++;
 	}
-	if (collectibles.collectibles != 1)
+	if (map->collectibles < 1)
 	{
 		write(2, "Check collectibles !\n", 22);
-		return (0);
+		exit (1);
 	}
-	return (collectibles.collectibles);
 }
 
-void	ft_contents(t_g map, t_g player, t_g exit, t_g collectibles)
+void	ft_contents(t_g map)
 {
-	ft_checkplayer(map, player);
-	ft_checkexit(map, exit);
-	ft_checkcollectibles(map, collectibles);
+	ft_checkplayer(&map);
+	ft_checkexit(&map);
+	ft_checkcollectibles(&map);
 }
 
-void	ft_checkelemnts(char **av, t_g map)
+void	ft_checkelemnts(t_g *map)
 {
-	int	columns;
-	int	row;
 	int	i;
 	int	j;
 
 	i = 0;
-	columns = ft_getlencolumns(av);
-	row = ft_getlenrow(map);
-	while (map.map[i])
+	while (map->map[i])
 	{
 		j = 0;
-		while (map.map[i][j])
+		while (map->map[i][j])
 		{
-			if (map.map[i][j] != '1' && map.map[i][j] != '\n'
-				&& map.map[i][j] != '0' && map.map[i][j] != 'E'
-				&& map.map[i][j] != 'C' && map.map[i][j] != 'P'
-				&& map.map[i][j] != '\0')
+			if (map->map[i][j] != '1' && map->map[i][j] != '\n'
+				&& map->map[i][j] != '0' && map->map[i][j] != 'E'
+				&& map->map[i][j] != 'C' && map->map[i][j] != 'P'
+				&& map->map[i][j] != '\0')
 			{
 				write(2, "Elements Error\n", 16);
 				exit (0);

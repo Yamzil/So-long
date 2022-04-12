@@ -6,37 +6,48 @@
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 00:57:14 by yamzil            #+#    #+#             */
-/*   Updated: 2022/04/08 01:32:12 by yamzil           ###   ########.fr       */
+/*   Updated: 2022/04/11 01:20:52 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	ft_getlencolumns(char **av)
+void	ft_getlencolumns(char **av, t_g *map)
 {
 	int		count;
 	int		fd;
-	char	*map;
+	char	*line;
 
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
-		return (0);
-	map = get_next_line(fd);
+		return ;
+	line = get_next_line(fd);
 	count = 0;
-	while (map)
+	while (line)
 	{
 		count++;
-		map = get_next_line(fd);
+		line = get_next_line(fd);
+		free(line);
 	}
-	return (count);
+	map->height = count;
 }
 
-int	ft_getlenrow(t_g map)
+void	ft_getlenrow(t_g *map)
 {
 	int	j;
-
+	
 	j = 0;
-	while (map.map[0][j] != '\n')
+	while (map->map[0][j] != '\n')
 		j++;
-	return (j);
+	map->width = j;
+}
+
+int	ft_getlast(t_g *map)
+{
+	int	i;
+
+	i = 0;
+	while (map->map[map->height][i] != '\0')
+		i++;
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 16:38:46 by yamzil            #+#    #+#             */
-/*   Updated: 2022/04/08 02:05:38 by yamzil           ###   ########.fr       */
+/*   Updated: 2022/04/12 02:08:49 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,41 @@
 # include <fcntl.h>
 # include <mlx.h>
 
-# define WIN_HEIGHT 1280
-# define WIN_WIDTH 720
+enum {
+	key_w = 13,
+	key_s = 1,
+	key_a = 0,
+	key_d = 2,
+	key_ecs = 53,
+	key_cross = 17,	
+};
 
 typedef struct s_game {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
+	int		wall_width;
+	int		wall_height;
+	int		grasse_width;
+	int		grasse_height;
+	int		hero_width;
+	int		hero_height;
+	int		lettuce_width;
+	int		lettuce_height;
+	int		door_width;
+	int		door_height;
+	void	*mlx;
+	void	*mlx_win;
+	void	*wall;
+	void	*grasse;
+	void	*hero;
+	void	*lettuce;
+	void	*door;
 	char	**map;
 	int		player;
 	int		exit;
 	int		collectibles;
+	int		height;
+	int		width;
+	int		j_place;
+	int		i_place;
 }	t_g;
 
 // libft Functions
@@ -41,24 +63,34 @@ char	*ft_strrchr(const char *s, int c);
 char	*ft_strnstr(const char *haystack, const char *needle);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
-size_t	ft_strlen(const char *s);
+int		ft_strlen(const char *s);
 
 // Get Next Line
 char	*get_next_line(int fd);
 
 // Map Checker
+void	ft_checksurrounded(char **av, t_g *map);
+void	ft_checklen(t_g *map);
 int		ft_checkarg(int ac, char **av);
-int		ft_getlencolumns(char **av);
-int		ft_getlenrow(t_g map);
-t_g		ft_getmap(t_g map, char **av);
-void	ft_checksurrounded(char **av, t_g map);
-void	ft_checklen(t_g map);
+void	ft_getmap(t_g *map, char **av);
 
 // Map's ELements
-int		ft_checkplayer(t_g map, t_g player);
-int		ft_checkexit(t_g map, t_g exit);
-int		ft_checkcollectibles(t_g map, t_g collectibles);
-void	ft_checkelemnts(char **av, t_g map);
-void	ft_contents(t_g map, t_g player, t_g exit, t_g collectibles);
+void	ft_contents(t_g map);
+void	ft_checkcollectibles(t_g *map);
+void	ft_checkelemnts(t_g *map);
+void	ft_checkplayer(t_g *map);
+void	ft_checkexit(t_g *map);
 
+//Coune line
+void	ft_getlencolumns(char **av, t_g *map);
+int		ft_getlast(t_g *map);
+void	ft_getlenrow(t_g *map);
+
+//THE GAME
+void	ft_solong(t_g *map);
+void	ft_putimg(t_g *map);
+
+//Key Hook
+int 	ft_mouvment(int key_code, t_g *map);
+void	ft_check(int key_code, t_g *map, int i, int j);
 #endif

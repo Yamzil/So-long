@@ -6,7 +6,7 @@
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 00:57:14 by yamzil            #+#    #+#             */
-/*   Updated: 2022/04/11 01:20:52 by yamzil           ###   ########.fr       */
+/*   Updated: 2022/04/13 00:35:06 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_getlencolumns(char **av, t_g *map)
 {
+	char	*line;
 	int		count;
 	int		fd;
-	char	*line;
 
 	fd = open(av[1], O_RDONLY);
 	if (fd < 0)
@@ -27,7 +27,6 @@ void	ft_getlencolumns(char **av, t_g *map)
 	{
 		count++;
 		line = get_next_line(fd);
-		free(line);
 	}
 	map->height = count;
 }
@@ -35,7 +34,7 @@ void	ft_getlencolumns(char **av, t_g *map)
 void	ft_getlenrow(t_g *map)
 {
 	int	j;
-	
+
 	j = 0;
 	while (map->map[0][j] != '\n')
 		j++;

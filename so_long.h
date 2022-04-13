@@ -6,7 +6,7 @@
 /*   By: yamzil <yamzil@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 16:38:46 by yamzil            #+#    #+#             */
-/*   Updated: 2022/04/12 02:08:49 by yamzil           ###   ########.fr       */
+/*   Updated: 2022/04/13 18:31:04 by yamzil           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_game {
 	int		width;
 	int		j_place;
 	int		i_place;
+	int		counter;
 }	t_g;
 
 // libft Functions
@@ -87,10 +88,29 @@ int		ft_getlast(t_g *map);
 void	ft_getlenrow(t_g *map);
 
 //THE GAME
+void	ft_normputimg(t_g *map, int i, int j);
+void	ft_initial(t_g *map, int i, int j);
 void	ft_solong(t_g *map);
 void	ft_putimg(t_g *map);
+int		ft_close(void);
 
 //Key Hook
-int 	ft_mouvment(int key_code, t_g *map);
+int		ft_donemvm(int key_code, t_g *map, int i, int j);
+int		ft_mouvment(int key_code, t_g *map, int i, int j);
+int		ft_mouvmenttwo(int key_code, t_g *map, int i, int j);
 void	ft_check(int key_code, t_g *map, int i, int j);
+void	ft_winner(t_g *map, int i, int j);
+
+// key mouvement
+void	ft_keyforward(t_g *map, int i, int j);
+void	ft_keydown(t_g *map, int i, int j);
+void	ft_checkleft(t_g *map, int i, int j);
+void	ft_checkright(t_g *map, int i, int j);
+
+// Norminette
+void	ft_mvminit(t_g *map, int i, int j);
+void	ft_initial(t_g *map, int i, int j);
+void	fermer(int key_code);
+int		ft_destroy(void);
+void	ft_printmvm(t_g *map);
 #endif

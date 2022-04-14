@@ -34,7 +34,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 
-OBJ = $(SRC=.c=.o)
+OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
